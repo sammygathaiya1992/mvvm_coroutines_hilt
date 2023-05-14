@@ -11,9 +11,10 @@ import com.example.mvvm_coroutines_retrofit.models.Restaurants
 import com.example.mvvm_coroutines_retrofit.ui.adapters.RestaurantAdapter
 import com.example.mvvm_coroutines_retrofit.ui.view_model.RequestState
 import com.example.mvvm_coroutines_retrofit.ui.view_model.RestaurantsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val restaurantsViewModel: RestaurantsViewModel by viewModels()
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }

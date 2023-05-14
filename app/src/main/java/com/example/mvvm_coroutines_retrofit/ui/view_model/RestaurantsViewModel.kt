@@ -3,20 +3,21 @@ package com.example.mvvm_coroutines_retrofit.ui.view_model
 
 import androidx.lifecycle.viewModelScope
 import com.example.mvvm_coroutines_retrofit.data.repository.RestaurantsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RestaurantsViewModel(
-    dispatcher: CoroutineDispatcher = Dispatchers.IO
+@HiltViewModel
+class RestaurantsViewModel @Inject constructor(
+    private val restaurantsRepository: RestaurantsRepository
 ): BaseViewModel<RequestState>() {
 
     private val errorHandler = CoroutineExceptionHandler { _, exception ->
         requestState.value = exception.message?.let { RequestState.Error(it) }
         }
-
-    private val restaurantsRepository = RestaurantsRepository(dispatcher)
 
     fun getAllRestaurants(){
         requestState.value = RequestState.Loading

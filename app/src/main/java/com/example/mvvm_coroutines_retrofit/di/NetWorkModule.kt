@@ -1,13 +1,23 @@
-package com.example.mvvm_coroutines_retrofit.data
+package com.example.mvvm_coroutines_retrofit.di
 
+import com.example.mvvm_coroutines_retrofit.data.ApiService
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
-object RetrofitUtil {
+@Module
+@InstallIn(SingletonComponent::class)
+object NetWorkModule {
 
-    fun getInstance(): Retrofit {
+    @Provides
+    @Singleton
+    fun providesApiService(): ApiService{
         var mHttpLoggingInterceptor = HttpLoggingInterceptor()
             .setLevel(HttpLoggingInterceptor.Level.BODY)
 
@@ -20,7 +30,7 @@ object RetrofitUtil {
             .baseUrl("https://restaurants-db-default-rtdb.firebaseio.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(mOkHttpClient)
-            .build()
+            .build().create(ApiService::class.java)
     }
 
 }
